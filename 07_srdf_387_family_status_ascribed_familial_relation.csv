@@ -1,0 +1,11 @@
+action,subject,object,params.name,params.datatype,params.cardinality,params.ontology_class,params.parent_property,params.description,params.config,params.ontology_property,params.publication_id
+create_branch,family_status,d990c143-f9da-5818-981a-ae359c6f116b,,,,,,,,,
+add_node,family_status,srdf_373_1,Srdf 373 1,semantic,n,https://ontology.swissartresearch.net/aaao/ZE10_Family_Status,https://ontology.swissartresearch.net/aaao/ZP29i_is_familial_subject_of,,,,
+add_node,srdf_373_1,srdf_878_1,Family Status Holds For,resource-instance-list,n,http://www.cidoc-crm.org/cidoc-crm/E74_Group,https://ontology.swissartresearch.net/aaao/ZP4_holds_for,,"{""graphs"": [{""graphid"": ""d4a88461-5463-11e9-90d9-000d3ab1e588"", ""ontologyProperty"": """", ""inverseOntologyProperty"": """", ""useOntologyRelationship"": false}], ""searchDsl"": """", ""searchString"": """"}",,
+add_node,srdf_373_1,srdf_388_1,Family Status Time-span,string,1,http://www.cidoc-crm.org/cidoc-crm/E52_Time-Span,http://www.cidoc-crm.org/cidoc-crm/P4_has_time-span,,,,
+add_node,srdf_373_1,srdf_389_1,Family Status Event Context,string,n,http://www.cidoc-crm.org/cidoc-crm/E5_Event,https://ontology.swissartresearch.net/aaao/ZP75_applies_for_context,,,,
+add_node,srdf_373_1,srdf_390_1,Family Status Context Type,string,1,http://www.cidoc-crm.org/cidoc-crm/E55_Type,https://ontology.swissartresearch.net/aaao/ZP76_applies_for_context_type,,,,
+add_node,srdf_373_1,srdf_391_1,Family Status Initiating Act,string,1,https://ontology.swissartresearch.net/aaao/ZE52_Transformative_Symbolic_Act,https://ontology.swissartresearch.net/aaao/ZP42i_was_intentionally_initiated_by,,,,
+add_node,srdf_373_1,srdf_392_1,Family Status Terminating Act,string,1,https://ontology.swissartresearch.net/aaao/ZE52_Transformative_Symbolic_Act,https://ontology.swissartresearch.net/aaao/ZP52i_was_intentionally_terminated_by,,,,
+add_node,srdf_373_1,srdf_396_1,Family Status Type,string,n,http://www.cidoc-crm.org/cidoc-crm/E55_Type,http://www.cidoc-crm.org/cidoc-crm/P2_has_type,,,,
+add_node,srdf_373_1,srdf_395_1,Family Status Statement,string,n,http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object,http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by,,,,

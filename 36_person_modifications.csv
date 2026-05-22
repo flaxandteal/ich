@@ -1,0 +1,8 @@
+action,subject,object,params.name,params.datatype,params.cardinality,params.ontology_class,params.parent_property,params.description,params.config,params.ontology_property,params.publication_id
+load_graph,22477f01-1a44-11e9-b0a9-000d3ab1e588,,,,,,,,,,
+add_subgraph,person,d7a65ff2-ffc9-5bb3-8a85-09a22bf9774d,,,,,,,,,
+add_subgraph,person,9693285a-f806-59ec-a82b-257971fa93dc,,,,,,,,,
+add_subgraph,person,d990c143-f9da-5818-981a-ae359c6f116b,,,,,,,,,
+add_subgraph,person,4207b0d5-d89c-55d6-8cf0-4cb125813af7,,,,,,,,,
+add_subgraph,person,16305fc1-f072-546a-8d9f-777a9acd2c31,,,,,,,,,
+add_node,person,292_1,Source Reference Work,resource-instance-list,n,http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object,http://www.cidoc-crm.org/cidoc-crm/P129i_is_subject_of,,"{""graphs"": [{""graphid"": ""0add0e11-99aa-11ea-9ab8-f875a44e0e11"", ""ontologyProperty"": """", ""inverseOntologyProperty"": """", ""useOntologyRelationship"": false}], ""searchDsl"": """", ""searchString"": """"}",,

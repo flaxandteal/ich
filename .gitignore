@@ -1,0 +1,5 @@
+output
+.cache
+.claude
+*.xlsx
+__pycache__

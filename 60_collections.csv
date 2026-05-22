@@ -1,0 +1,4 @@
+action,subject,object,params.name,params.datatype,params.cardinality,params.ontology_class,params.parent_property,params.description,params.config,params.ontology_property,params.publication_id
+# Collection assignments for ICH concept/reference fields,,,,,,,,,,,
+# These rows require node UUIDs from the built graphs.,,,,,,,,,,,
+# Run once after initial graph build and fill in UUIDs.,,,,,,,,,,,

@@ -1,0 +1,8 @@
+action,subject,object,params.name,params.datatype,params.cardinality,params.ontology_class,params.parent_property,params.description,params.config,params.ontology_property,params.publication_id
+create_branch,creation,62e9744d-a0ff-5da8-91f7-aa47db549090,,,,,,,,,
+add_node,creation,71_1,71 1,semantic,n,http://www.cidoc-crm.org/cidoc-crm/E65_Creation,http://www.cidoc-crm.org/cidoc-crm/P94i_was_created_by,,,,
+add_node,71_1,srdf_298_1,Srdf 298 1,semantic,n,http://www.cidoc-crm.org/cidoc-crm/PC14_carried_out_by,http://www.cidoc-crm.org/cidoc-crm/P01i_is_domain_of,,,,
+add_node,srdf_298_1,srdf_298_2,Creator,resource-instance-list,n,http://www.cidoc-crm.org/cidoc-crm/E39_Actor,http://www.cidoc-crm.org/cidoc-crm/P02_has_range,,"{""graphs"": [{""graphid"": ""22477f01-1a44-11e9-b0a9-000d3ab1e588"", ""ontologyProperty"": """", ""inverseOntologyProperty"": """", ""useOntologyRelationship"": false}, {""graphid"": ""d4a88461-5463-11e9-90d9-000d3ab1e588"", ""ontologyProperty"": """", ""inverseOntologyProperty"": """", ""useOntologyRelationship"": false}], ""searchDsl"": """", ""searchString"": """"}",,
+add_node,srdf_298_1,srdf_300_1,Creator Role,concept,n,http://www.cidoc-crm.org/cidoc-crm/E55_Type,http://www.cidoc-crm.org/cidoc-crm/P14.1_in_the_role_of,,,,
+add_node,71_1,90_1,TimeSpan of Creation Event,semantic,1,http://www.cidoc-crm.org/cidoc-crm/E52_Time-Span,http://www.cidoc-crm.org/cidoc-crm/P4_has_time-span,,,,
+add_subgraph,90_1,8aeb4e58-1b46-11ea-89a5-c4d9877d154e,,,,,,,,,

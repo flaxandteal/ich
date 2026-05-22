@@ -1,0 +1,4 @@
+[submodule "arches-her"]
+	path = arches-her
+	url = https://github.com/archesproject/arches-her.git
+	branch = dev/2.0.x
