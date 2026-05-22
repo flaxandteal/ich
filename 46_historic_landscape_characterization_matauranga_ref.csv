@@ -1,0 +1,3 @@
+action,subject,object,params.name,params.datatype,params.cardinality,params.ontology_class,params.parent_property,params.description,params.config,params.ontology_property,params.publication_id
+load_graph,934cd7f0-480a-11ea-9240-c4d9877d154e,,,,,,,,,,
+add_node,historic_landscape_characterization,292_1,Reference Mātauranga,resource-instance-list,1,http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object,http://www.cidoc-crm.org/cidoc-crm/P129i_is_subject_of,,"{""graphs"": [{""graphid"": ""0add0e11-99aa-11ea-9ab8-f875a44e0e11"", ""ontologyProperty"": """", ""inverseOntologyProperty"": """", ""useOntologyRelationship"": false}], ""searchDsl"": """", ""searchString"": """"}",,

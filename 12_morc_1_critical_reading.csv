@@ -1,0 +1,6 @@
+action,subject,object,params.name,params.datatype,params.cardinality,params.ontology_class,params.parent_property,params.description,params.config,params.ontology_property,params.publication_id
+create_branch,critical_reading,caff8041-8e8c-5878-b93a-02a5859325d5,,,,,,,,,
+add_node,critical_reading,morf_1_1,Morf 1 1,semantic,n,https://ontology.swissartresearch.net/aaao/ZE18_Critical_Reading,http://www.cidoc-crm.org/cidoc-crm/P16i_was_used_for,,,,
+add_node,morf_1_1,morf_2_1,Critical Reading Actor,resource-instance-list,n,http://www.cidoc-crm.org/cidoc-crm/E39_Actor,http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by,,"{""graphs"": [{""graphid"": ""d4a88461-5463-11e9-90d9-000d3ab1e588"", ""ontologyProperty"": """", ""inverseOntologyProperty"": """", ""useOntologyRelationship"": false}, {""graphid"": ""22477f01-1a44-11e9-b0a9-000d3ab1e588"", ""ontologyProperty"": """", ""inverseOntologyProperty"": """", ""useOntologyRelationship"": false}], ""searchDsl"": """", ""searchString"": """"}",,
+add_node,morf_1_1,morf_3_1,Critical Reading Classification,semantic,n,https://ontology.swissartresearch.net/aaao/ZE4_Classificatory_Status,https://ontology.swissartresearch.net/aaao/ZP42_intentionally_initiated,,,,
+add_subgraph,morf_3_1,16305fc1-f072-546a-8d9f-777a9acd2c31,,,,,,,,,
