@@ -3,3 +3,4 @@ output
 .claude
 *.xlsx
 __pycache__
+.~lock*
