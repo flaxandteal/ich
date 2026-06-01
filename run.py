@@ -182,6 +182,15 @@ def main():
                      f"Check that --pkg-dir points to the arches_her/pkg directory.")
     graph_ids = load_pkg_graphs(pkg_dir)
 
+    # --- MHP models (authoritative hand-built resource models) ---
+    mhp_dir = SCRIPT_DIR / "mhp"
+    if mhp_dir.is_dir():
+        print("--- MHP Models ---")
+        for fp in sorted(mhp_dir.glob("*.json")):
+            graph_id = alizarin.register_graph(fp.read_text())
+            print(f"  Registered: {fp.name}")
+            graph_ids.append(graph_id)
+
     # --- Ontology ---
     ontology_validator = None
     if not args.no_ontology_validation:

@@ -2,6 +2,8 @@
 
 Extensions to Arches HER resource models for Intangible Cultural Heritage.
 
+Credit and thanks to [Takin Solutions](https://www.takin.solutions/) for establishing these.
+
 ## Structure
 
 - `generate.py` — reads `Maori Heritage Project.xlsx` and produces numbered mutation CSVs
