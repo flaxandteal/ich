@@ -17,6 +17,7 @@ import urllib.request
 from pathlib import Path
 
 import alizarin
+import alizarin_clm  # noqa: F401 — registers reference datatype + widgets
 from alizarin import RustRdmCache
 
 SCRIPT_DIR = Path(__file__).parent
@@ -183,11 +184,24 @@ def main():
     graph_ids = load_pkg_graphs(pkg_dir)
 
     # --- MHP models (authoritative hand-built resource models) ---
+    # Convert concept nodes to reference type with controlledList.
     mhp_dir = SCRIPT_DIR / "mhp"
     if mhp_dir.is_dir():
         print("--- MHP Models ---")
         for fp in sorted(mhp_dir.glob("*.json")):
-            graph_id = alizarin.register_graph(fp.read_text())
+            data = json.loads(fp.read_text())
+            graph = data.get("graph", [{}])[0] if "graph" in data else data
+            for node in graph.get("nodes", []):
+                if node.get("datatype") in ("concept", "concept-list"):
+                    node["datatype"] = "reference"
+                    config = node.get("config") or {}
+                    if not config.get("controlledList"):
+                        name = node.get("name", "")
+                        if isinstance(name, dict):
+                            name = name.get("en", "")
+                        config["controlledList"] = name.replace("-", " ").title()
+                        node["config"] = config
+            graph_id = alizarin.register_graph(json.dumps(data))
             print(f"  Registered: {fp.name}")
             graph_ids.append(graph_id)
 
@@ -235,34 +249,16 @@ def main():
         )
 
     # --- Process numbered ICH CSV files ---
+    # 60_collections.csv is excluded: it's reference-only; collection
+    # assignments are applied at MHP load time above and inline in branch
+    # add_node configs.
     print("\n--- ICH Mutations ---")
-    csv_files = sorted(
-        f for f in os.listdir(SCRIPT_DIR)
-        if re.match(r'\d+_.*\.csv', f)
-    )
-
-    for csv_file in csv_files:
-        print(f"  {csv_file}")
-        csv_text = (SCRIPT_DIR / csv_file).read_text()
-        # Skip CSVs with no actionable rows (only comments/header)
-        data_lines = [
-            l for l in csv_text.splitlines()
-            if l.strip() and not l.strip().startswith("#")
-        ]
-        if len(data_lines) <= 1:  # header only
-            print("    (skipped — no instructions)")
-            continue
-        graph_json = alizarin.build_graph_from_csv(
-            csv_text, ontology_validator=ontology_validator
+    graph_ids.extend(
+        alizarin.process_mutation_csvs(
+            str(SCRIPT_DIR), ontology_validator=ontology_validator,
+            exclude_pattern=r"60_.*\.csv",
         )
-        graph_id = alizarin.register_graph(graph_json)
-        graph_ids.append(graph_id)
-
-        result = json.loads(graph_json)
-        name = result.get("name", {})
-        if isinstance(name, dict):
-            name = name.get("en", "?")
-        print(f"    -> {name}")
+    )
 
     # --- Export ---
     print("\n--- Export ---")

@@ -60,10 +60,28 @@ HER_MODEL_NAME_ALIASES = {
     "Consltation": "Consultation",  # typo in HER data
 }
 
+# Spreadsheet collection reference → HER branch name for cases that can't be
+# auto-resolved by suffix matching (name differences, abbreviations, etc.).
+COLLECTION_REF_TO_HER_BRANCH = {
+    "MORC.3_name": "Names",
+    "HERC.3_names": "Names",
+    "HERC.17_name_standard": "Names",
+    "HERC.79_simple_timespan": "Timespan (date)",
+    "HERC.4_timespan": "Timespan (edtf)",
+    "HERC.1_statement": "Descriptions",
+    "HERC.12_record_status_assignment": "Record Type",
+    "HERC.2_audit_metadata": "Audit Metadata",
+    "HERC.13_location_data": "Location Data",
+    "HERC.27_system_reference_numbers": "System Reference Numbers",
+    "HERC.43_bibliographic_source": "Bibliographic Source Citation",
+    "HERC.7_identifier_reference": "External Cross References",
+    "LAC.3_type": "Type",
+}
+
 # Spreadsheet Field Type → alizarin datatype.
 FIELD_TYPE_MAP = {
     "string": "string",
-    "concept": "concept",
+    "concept": "reference",
     "date": "date",
     "reference model": "resource-instance-list",
     "collection": "semantic",  # subgraph attachment
@@ -375,30 +393,51 @@ def make_coppice_uuid(parent_context, node_name, branch_uuid):
                           f"coppice:{parent_context}:{node_name}:{branch_uuid}"))
 
 
-def resolve_collection_to_branch(ref_str, new_branch_map, existing_branch_map):
+def resolve_collection_to_branch(ref_str, new_branch_map, existing_branch_map,
+                                  her_branches=None):
     """Resolve a collection reference like 'MORC.3_name' or 'HERC.79_simple_timespan'
     to a branch UUID.
 
-    Checks new ICH branches first, then existing HER branches.
+    Checks new ICH branches first, then existing HER branches, then known
+    collection-to-branch mappings, then fuzzy suffix matching against HER.
     """
     if not ref_str:
         return None
     ref = ref_str.strip()
+    her_branches = her_branches or {}
+
     # Try direct match in new branches
     if ref in new_branch_map:
         return new_branch_map[ref]
     # Try in existing branches
     if ref in existing_branch_map:
         return existing_branch_map[ref]
+
+    # Try known mapping table
+    mapped_name = COLLECTION_REF_TO_HER_BRANCH.get(ref)
+    if mapped_name and mapped_name in her_branches:
+        return her_branches[mapped_name]
+
     # Try the part after the underscore (e.g. HERC.79_simple_timespan → simple_timespan)
     parts = ref.split("_", 1)
     if len(parts) > 1:
         suffix = parts[1]
-        # Prefer exact suffix match, then shortest key match
+        # Exact suffix match in maps
         for map_ in (new_branch_map, existing_branch_map):
             exact = [v for k, v in map_.items() if k.endswith(f"_{suffix}")]
             if exact:
                 return exact[0]
+        # Title-case suffix against HER branches (with plural/singular)
+        if her_branches:
+            title = suffix.replace("_", " ").title()
+            for variant in [title, title + "s", title.rstrip("s")]:
+                if variant in her_branches:
+                    return her_branches[variant]
+            # Partial match: suffix words in branch name
+            _lower = {k.lower(): v for k, v in her_branches.items()}
+            for bn_lower, bu in _lower.items():
+                if suffix.replace("_", " ") in bn_lower or bn_lower in suffix.replace("_", " "):
+                    return bu
     return f"TODO:branch_uuid_for_{ref}"
 
 
@@ -555,7 +594,8 @@ def build_resource_instance_config(ref_str):
 # ---------------------------------------------------------------------------
 
 def build_branch_rows(collection_id, collection_name, fields, branch_uuid,
-                      new_branch_map=None, existing_branch_map=None):
+                      new_branch_map=None, existing_branch_map=None,
+                      her_branches=None):
     """Build CSV rows for a new branch from a set of fields sharing a collection.
 
     For Collection-type fields, emits add_subgraph (or coppice_subgraph for
@@ -565,6 +605,7 @@ def build_branch_rows(collection_id, collection_name, fields, branch_uuid,
     """
     new_branch_map = new_branch_map or {}
     existing_branch_map = existing_branch_map or {}
+    her_branches = her_branches or {}
     rows = []
     safe_name = sanitise_node_name(collection_name or collection_id)
     rows.append(csv_row("create_branch", safe_name, branch_uuid))
@@ -617,6 +658,9 @@ def build_branch_rows(collection_id, collection_name, fields, branch_uuid,
                     config = ""
                     if dt == "resource-instance-list" and ref_model:
                         config = build_resource_instance_config(ref_model)
+                    elif dt == "reference":
+                        coll_name = display_name or node_name.replace("_", " ").title()
+                        config = json.dumps({"controlledList": coll_name})
 
                     rows.append(csv_row(
                         "add_node", parent, node_name,
@@ -631,7 +675,8 @@ def build_branch_rows(collection_id, collection_name, fields, branch_uuid,
                     # Collection fields: attach the referenced branch as a subgraph
                     if field_type == "collection" and ref_model:
                         sub_uuid = resolve_collection_to_branch(
-                            ref_model, new_branch_map, existing_branch_map)
+                            ref_model, new_branch_map, existing_branch_map,
+                            her_branches=her_branches)
                         if sub_uuid in attached_subgraphs:
                             # Same branch already attached elsewhere in this graph
                             # → coppice the first attachment to create a new copy
@@ -686,7 +731,8 @@ def build_branch_rows(collection_id, collection_name, fields, branch_uuid,
 # ---------------------------------------------------------------------------
 
 def build_model_modification_rows(model, fields, new_branch_map,
-                                   existing_branch_map=None, her_graph_uuid=None):
+                                   existing_branch_map=None, her_graph_uuid=None,
+                                   her_branches=None):
     """Build CSV rows for modifying an existing HER model.
 
     - load_graph with HER UUID
@@ -733,12 +779,26 @@ def build_model_modification_rows(model, fields, new_branch_map,
 
         _add_path_nodes(rows, root_name, segments, field,
                         new_branch_map=new_branch_map,
-                        existing_branch_map=existing_branch_map)
+                        existing_branch_map=existing_branch_map,
+                        her_branches=her_branches)
+
+    # Add Reference Mātauranga link if not already present as a new field
+    # (models promoted from "same" have the matauranga field as is_new=None,
+    # so it won't be picked up by the standalone-fields loop above).
+    has_new_mat = any(
+        f.get("is_new") and "292_1" in (f.get("field_semantics") or "")
+        for f in fields
+    )
+    if not has_new_mat:
+        mat_row = build_matauranga_ref_row(root_name)
+        if mat_row:
+            rows.append(mat_row)
 
     return rows
 
 
-def build_new_model_rows(model, fields, new_branch_map, existing_branch_map):
+def build_new_model_rows(model, fields, new_branch_map, existing_branch_map,
+                         her_branches=None):
     """Build CSV rows for a new resource model (Tikanga, Event).
 
     - create_model
@@ -816,19 +876,22 @@ def build_new_model_rows(model, fields, new_branch_map, existing_branch_map):
             continue
         _add_path_nodes(rows, safe_name, segments, field,
                         new_branch_map=new_branch_map,
-                        existing_branch_map=existing_branch_map)
+                        existing_branch_map=existing_branch_map,
+                        her_branches=her_branches)
 
     return rows
 
 
 def _add_path_nodes(rows, parent, segments, field,
-                    new_branch_map=None, existing_branch_map=None):
+                    new_branch_map=None, existing_branch_map=None,
+                    her_branches=None):
     """Add CRM path nodes to rows for a standalone field.
 
     For Collection-type fields, emits add_subgraph after the semantic node.
     """
     new_branch_map = new_branch_map or {}
     existing_branch_map = existing_branch_map or {}
+    her_branches = her_branches or {}
     current_parent = parent
     for seg_idx, seg in enumerate(segments):
         is_last = seg_idx == len(segments) - 1
@@ -853,6 +916,9 @@ def _add_path_nodes(rows, parent, segments, field,
             if dt == "resource-instance-list" and field.get("reference_model"):
                 config = build_resource_instance_config(field["reference_model"])
             display_name = field.get("field_name") or field.get("field_display") or ""
+            if dt == "reference":
+                coll_name = display_name or node_name.replace("_", " ").title()
+                config = json.dumps({"controlledList": coll_name})
             rows.append(csv_row(
                 "add_node", current_parent, node_name,
                 name=display_name, datatype=dt, cardinality=card,
@@ -863,7 +929,8 @@ def _add_path_nodes(rows, parent, segments, field,
             # Collection fields: attach referenced branch as subgraph
             if field_type == "collection" and field.get("reference_model"):
                 sub_uuid = resolve_collection_to_branch(
-                    field["reference_model"], new_branch_map, existing_branch_map)
+                    field["reference_model"], new_branch_map, existing_branch_map,
+                    her_branches=her_branches)
                 if sub_uuid:
                     rows.append(csv_row("add_subgraph", node_name, sub_uuid))
         elif is_literal_leaf:
@@ -1060,6 +1127,23 @@ def generate(xlsx_path, pkg_dir=None, output_dir=None):
             if coll_name:
                 collection_display_names.setdefault(coll, set()).add(coll_name)
 
+    # --- 4b. Auto-promote "same" models that have new collection fields ---
+    # The spreadsheet may classify a model as "same" even though it has new
+    # ICH branches to attach (e.g. Activity).  Promote to "modify" so they
+    # get branch-attachment CSVs generated.
+    for model in list(same_models):
+        mid = model["id"]
+        has_new_coll = any(
+            f.get("is_new") and f.get("collection")
+            for f in all_model_fields.get(mid, [])
+        )
+        if has_new_coll:
+            model["action"] = "modify"
+            same_models.remove(model)
+            modify_models.append(model)
+            print(f"  Promoted {mid} ({model['name']}) from 'same' → 'modify' "
+                  f"(has new collection fields)")
+
     # --- 5. Assign UUIDs to new branches ---
     # Deduplicate: same collection_id across sheets means same branch.
     new_branch_map = {}  # collection_id → branch_uuid
@@ -1130,6 +1214,12 @@ def generate(xlsx_path, pkg_dir=None, output_dir=None):
 
         existing_branch_map[coll_id] = f"TODO:branch_uuid_for_{coll_id}"
 
+    # --- 6b. Clean up stale generated CSVs ---
+    # Numbered CSVs are regenerated each run; remove old ones to prevent
+    # collisions when file numbering shifts (e.g. model reclassification).
+    for stale in sorted(output_dir.glob("[0-9][0-9]_*.csv")):
+        stale.unlink()
+
     # --- 7. Generate branch CSV files ---
     branch_file_num = 1
     for coll_id, fields in sorted_collections:
@@ -1159,20 +1249,41 @@ def generate(xlsx_path, pkg_dir=None, output_dir=None):
             coll_id, coll_name, unique_fields, branch_uuid,
             new_branch_map=new_branch_map,
             existing_branch_map=existing_branch_map,
+            her_branches=her_branches,
         )
         filename = f"{branch_file_num:02d}_{sanitise_node_name(coll_id)}.csv"
         write_csv(output_dir / filename, branch_rows)
         branch_file_num += 1
 
     # --- 8. Generate new model CSVs ---
+    # Skip models that have authoritative MHP JSONs (hand-built models
+    # take precedence over mutation-generated ones).
+    mhp_dir = SCRIPT_DIR / "mhp"
+    mhp_model_names = set()
+    if mhp_dir.is_dir():
+        for fp in mhp_dir.glob("*.json"):
+            try:
+                data = json.loads(fp.read_text())
+                g = data.get("graph", [{}])[0] if "graph" in data else data
+                n = g.get("name", "")
+                if isinstance(n, dict):
+                    n = n.get("en", "")
+                mhp_model_names.add(n.lower())
+            except (json.JSONDecodeError, IndexError):
+                pass
+
     model_file_num = 20
     for model in new_models:
         model_id = model["id"]
+        if model["name"].lower() in mhp_model_names:
+            print(f"  Skipping {model_id} ({model['name']}) — MHP JSON is authoritative")
+            continue
         fields = all_model_fields.get(model_id, [])
         if not fields:
             print(f"  WARNING: No fields for new model {model_id}")
             continue
-        model_rows = build_new_model_rows(model, fields, new_branch_map, existing_branch_map)
+        model_rows = build_new_model_rows(model, fields, new_branch_map, existing_branch_map,
+                                         her_branches=her_branches)
         safe_name = sanitise_node_name(model["name"])
         filename = f"{model_file_num}_{safe_name}_model.csv"
         write_csv(output_dir / filename, model_rows)
@@ -1193,6 +1304,7 @@ def generate(xlsx_path, pkg_dir=None, output_dir=None):
             model, fields, new_branch_map,
             existing_branch_map=existing_branch_map,
             her_graph_uuid=her_uuid,
+            her_branches=her_branches,
         )
         safe_name = sanitise_node_name(model.get("her_model") or model["name"])
         filename = f"{mod_file_num}_{safe_name}_modifications.csv"
@@ -1226,20 +1338,79 @@ def generate(xlsx_path, pkg_dir=None, output_dir=None):
         mat_file_num += 1
 
     # --- 11. Generate collection assignment CSV ---
-    # Placeholder for clm.reference_change_collection rows.
-    # These require knowing the node UUIDs after graph building,
-    # so we emit stubs with TODO markers for now.
+    # For MHP models (hand-built JSONs): set rdmCollection on concept nodes
+    # via update_node.  Branch concept nodes already have rdmCollection set
+    # inline in their add_node config from the branch CSVs.
     coll_rows = []
-    coll_rows.append(csv_row(
-        "# Collection assignments for ICH concept/reference fields",
-    ))
-    coll_rows.append(csv_row(
-        "# These rows require node UUIDs from the built graphs.",
-    ))
-    coll_rows.append(csv_row(
-        "# Run once after initial graph build and fill in UUIDs.",
-    ))
-    write_csv(output_dir / "60_collections.csv", coll_rows)
+
+    mhp_dir = SCRIPT_DIR / "mhp"
+    if mhp_dir.is_dir():
+        for mhp_path in sorted(mhp_dir.glob("*.json")):
+            try:
+                data = json.loads(mhp_path.read_text())
+                graph = data.get("graph", [{}])[0] if "graph" in data else data
+                graph_id = graph.get("graphid", "")
+            except (json.JSONDecodeError, IndexError):
+                continue
+            if not graph_id:
+                continue
+
+            concept_nodes = [
+                n for n in graph.get("nodes", [])
+                if n.get("datatype") in ("concept", "concept-list")
+                and n.get("nodeid")
+            ]
+            if not concept_nodes:
+                continue
+
+            # Match MHP model to spreadsheet by graph name
+            graph_name = graph.get("name", "")
+            if isinstance(graph_name, dict):
+                graph_name = graph_name.get("en", next(iter(graph_name.values()), ""))
+
+            # Build map: lowered field display name → collection ref from spreadsheet
+            field_coll_map = {}
+            for model in models:
+                if model["action"] == "new" and model["name"].lower() == graph_name.lower():
+                    for f in all_model_fields.get(model["id"], []):
+                        if f.get("field_type") == "concept" and f.get("reference_model"):
+                            ref = f["reference_model"]
+                            if not re.match(r"MORM\.\d+", ref):
+                                fname = (f.get("field_name") or f.get("field_display") or "").strip()
+                                if fname:
+                                    field_coll_map[fname.lower()] = ref
+                    break
+
+            coll_rows.append(csv_row("load_graph", graph_id))
+
+            seen_nodeids = set()
+            for node in concept_nodes:
+                nid = node["nodeid"]
+                if nid in seen_nodeids:
+                    continue
+                seen_nodeids.add(nid)
+
+                name = node.get("name", "")
+                if isinstance(name, dict):
+                    name = name.get("en", next(iter(name.values()), ""))
+                alias = node.get("alias", "")
+
+                # Match node to spreadsheet field by converting alias to title case
+                title_name = alias.replace("-", " ").title() if alias else name
+                coll_ref = field_coll_map.get(title_name.lower(), "")
+                if not coll_ref:
+                    # Fallback: use title-cased alias as collection name
+                    coll_ref = title_name or name
+
+                coll_rows.append(csv_row(
+                    "update_node", alias or nid,
+                    config=json.dumps({"controlledList": coll_ref}),
+                ))
+
+    if coll_rows:
+        write_csv(output_dir / "60_collections.csv", coll_rows)
+    else:
+        write_csv(output_dir / "60_collections.csv", [])
 
     print(f"\nDone. Generated CSVs in {output_dir}/")
 
