@@ -49,7 +49,7 @@ PREFIX_MAP = {
     "crmdig": "http://www.ics.forth.gr/isl/CRMdig/",
     "crmsci": "http://www.cidoc-crm.org/extensions/crmsci/",
     "crmgeo": "http://www.cidoc-crm.org/extensions/crmgeo/",
-    "mahero": "https://ontology.swissartresearch.net/mahero/",
+    "mahero": "https://takin.solutions/ontologies/mahero/",
 }
 
 # Known discrepancies between spreadsheet HER model names and actual HER names.
