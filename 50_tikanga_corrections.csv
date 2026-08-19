@@ -1,0 +1,26 @@
+action,subject,object,params.name,params.datatype,params.cardinality,params.ontology_class,params.parent_property,params.description,params.config,params.ontology_property,params.publication_id,params.alias_prefix,params.name_prefix,params.label
+load_graph,07c3abbe-52cc-501b-98ef-58403bbf37e0,,,,,,,,,,,,,
+# Rename widgets to match Pletka spreadsheet (Tikanga Name / Tikanga Name Type)
+rename_node,name-content,,Tikanga Name,,,,,,,,,,,
+rename_node,name-type,,Tikanga Name Type,,,,,,,,,,,
+# Rename cards to match Pletka spec
+rename_node,e52_time-span_221,,Timespan,,,,,,,,,,,
+rename_node,ze4_classificatory_status_SRDF.3721,,Classification,,,,,,,,,,,
+# Fix cross-wired custody labels (ontology properties are correct, display names were swapped)
+rename_node,declarative-custody-transfer-generic-actor-receiving,,Custody Received By,,,,,,,,,,,
+rename_node,declarative-custody-transfer-generic-actor-surrendering,,Custody Surrendered By,,,,,,,,,,,
+# Change has-a-procedure-protocol from concept to string (X3ML confirms P3_has_note -> rdfs:Literal)
+delete_widget,c291ab26-2a90-5db6-8c62-59ce6e9c794f,,,,,,,,,,,,,
+change_node_type,has-a-procedure-protocol,,,string,,,,,,,,,,
+add_widget,5d07e054-069c-589c-8a82-a92e5690e08a,,,,,,,,"{""label"": ""Has a Procedure Protocol""}",,,,,Has a Procedure Protocol
+# Populate empty semantic placeholders with reusable branches
+# Appellative Status: Name, Timespan, Statement
+add_subgraph,appellative-status-ascribed-appellation,bbd0d023-955d-11e6-b664-024f9e178154,,,,,,,,,,appellative-status,Appellative Status,
+add_subgraph,appellative-status-time-span,8aeb4e58-1b46-11ea-89a5-c4d9877d154e,,,,,,,,,,appellative-status,Appellative Status,
+add_subgraph,appellative-status-statement,251551d8-7fe7-11ea-bcad-f875a44e0e11,,,,,,,,,,appellative-status,Appellative Status,
+# Classificatory Status: Timespan, Statement
+add_subgraph,classificatory-status-time-span,8aeb4e58-1b46-11ea-89a5-c4d9877d154e,,,,,,,,,,classificatory-status,Classification,
+add_subgraph,classificatory-status-statement,251551d8-7fe7-11ea-bcad-f875a44e0e11,,,,,,,,,,classificatory-status,Classification,
+# Evental Locative Status: Timespan, Statement
+add_subgraph,evental-locative-status-time-span,8aeb4e58-1b46-11ea-89a5-c4d9877d154e,,,,,,,,,,evental-locative-status,Evental Locative Status,
+add_subgraph,evental-locative-status-statement,251551d8-7fe7-11ea-bcad-f875a44e0e11,,,,,,,,,,evental-locative-status,Evental Locative Status,
