@@ -14,5 +14,5 @@ add_subgraph,classificatory-status-time-span,8aeb4e58-1b46-11ea-89a5-c4d9877d154
 add_subgraph,classificatory-status-statement,251551d8-7fe7-11ea-bcad-f875a44e0e11,,,,,,,,,,classificatory-status,Classification,
 rename_node,e55_type_111,resource_model_type,Resource Model Type,,,,,,,,,,,
 # Rename Resource Model Type branch fields to Mātauranga Type / Mātauranga Metatype,,,,,,,,,,,,,,
-rename_node,type,type,Mātauranga Type,,,,,,,,,,,
-rename_node,type-metatype,type-metatype,Mātauranga Metatype,,,,,,,,,,,
+rename_node,type,mātauranga_type,Mātauranga Type,,,,,,,,,,,
+rename_node,type-metatype,mātauranga_metatype,Mātauranga Metatype,,,,,,,,,,,
