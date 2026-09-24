@@ -4,3 +4,5 @@ output
 *.xlsx
 __pycache__
 .~lock*
+notebook.tar.gz
+.ipynb_checkpoints/
