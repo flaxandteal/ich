@@ -1,7 +1,7 @@
 action,subject,object,params.name,params.datatype,params.cardinality,params.ontology_class,params.parent_property,params.description,params.config,params.ontology_property,params.publication_id,params.alias_prefix,params.name_prefix,params.label
 load_graph,d612f761-2568-538e-b05e-eb9f81dca31c,,,,,,,,,,,,,
 # Rename 'Name'  to 'Event Names',,,,,,,,,,,,,,
-rename_node, e33_e41_linguistic_appellation_HERF.1061,event_names,Event Names,,,,,,,,,,,
+rename_node,e33_e41_linguistic_appellation_HERF.1061,event_names,Event Names,,,,,,,,,,,
 # Rename 'Identifier Reference'  to 'External Cross Reference',,,,,,,,,,,,,,
 rename_node,e42_identifier_81,external_cross_reference,External Cross Reference,,,,,,,,,,,
 # Rename 'Statement' to 'Description',,,,,,,,,,,,,,
