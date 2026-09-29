@@ -32,7 +32,7 @@ add_subgraph,evental-locative-status-statement,251551d8-7fe7-11ea-bcad-f875a44e0
 # Location Descriptions (Location_Descriptions.json) - own Type/Metatype fields,,,,,,,,,,,,,,
 add_subgraph,location-descriptions,db618aac-993a-11ea-9bde-f875a44e0e11,,,,,,,,,,location,Location Data,
 # --- System_Reference_Numbers.json ,,,,,,,,,,,,,,
-add_subgraph,event,c3cb4d26-19bc-11eb-aee7-f875a44e0e11,,,,,,,,,,system-reference-numbers,System Reference Numbers,
+add_subgraph,event,c3cb4d26-19bc-11eb-aee7-f875a44e0e11,,,,,,,,http://www.cidoc-crm.org/cidoc-crm/P140i_was_attributed_by,,,,
 "# --- Location Data branch files : Land Use Classification Assignment , Localities/Administrative Areas, Addresses , Geometry , Area Assignments (Area.json)",,,,,,,,,,,,,,
 add_subgraph,location-classification-assignment,fc0a29e8-28c3-11eb-a8cf-f875a44e0e11,,,,,,,,,,location,Location Data,
 add_subgraph,localities-administrative-areas,8fd40cd0-993a-11ea-a3b9-f875a44e0e11,,,,,,,,,,location,Location Data,
