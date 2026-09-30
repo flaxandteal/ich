@@ -19,7 +19,7 @@ rename_node,audit_notes_metatype,audit_description_metatype,Audit Description Me
 rename_node,validation,audit_validation,Audit Validation,,,,,,,,
 rename_node,validation_metatype,audit_validation_metatype,Audit Validation Metatype,,,,,,,,
 "# --- Statement branch: node names should be human readable (alias -> Title Case), 'statement_content' -> 'Statement'; aliases unchanged ---",,,,,,,,,,,
-rename_node,statement_content,statement_content,Statement,,,,,,,,
+# rename_node,statement_content,statement_content,Statement,,,,,,,,
 rename_node,statement_creation,statement_creation,Statement Creation,,,,,,,,
 rename_node,statement_creation_carried_out_by,statement_creation_carried_out_by,Statement Creation Carried Out By,,,,,,,,
 rename_node,statement_creation_digital_reference,statement_creation_digital_reference,Statement Creation Digital Reference,,,,,,,,
