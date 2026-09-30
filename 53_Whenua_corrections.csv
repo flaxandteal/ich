@@ -132,7 +132,6 @@ rename_node,custodial-status-statement,custodial_status_statement,Custodial Stat
 add_subgraph,captions,251551d8-7fe7-11ea-bcad-f875a44e0e11,,,,,,,,http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by,,images,Images,
 rename_node,captions,caption,Caption,,,,,,,,,,,
 # --- Datatype fixes (sheet vs JSON mismatch) ---
-change_node_type,area-location-data-national-grid-references,,,bngcentrepoint,,,,,,,,,,
 # --- Images: datatype (string -> file-list) + ontology_class (E36_Visual_Item -> E36_Visual_Image) fix ---
 change_node_type,image,,,file-list,,http://www.cidoc-crm.org/cidoc-crm/E36_Visual_Image,,,,,,,,
 # --- Ancestor: fix parent_property (MP1_ascribes_ancestor -> MP2_ascribes_ancestor) via delete+recreate ---
