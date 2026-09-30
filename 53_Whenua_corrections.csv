@@ -133,6 +133,3 @@ add_subgraph,captions,251551d8-7fe7-11ea-bcad-f875a44e0e11,,,,,,,,http://www.cid
 rename_node,captions,caption,Caption,,,,,,,,,,,
 # --- Datatype fixes (sheet vs JSON mismatch) ---
 # --- Images: datatype (string -> file-list) + ontology_class (E36_Visual_Item -> E36_Visual_Image) fix ---
-# --- Ancestor: fix parent_property (MP1_ascribes_ancestor -> MP2_ascribes_ancestor) via delete+recreate ---
-delete_node,whakapapa-status-ascribed-ancestor,,,,,,,,,,,,,
-add_node,ma1_whakapapa_status_MORF.41,whakapapa-status-ascribed-ancestor,whakapapa-status-ascribed-ancestor,resource-instance-list,n,http://www.cidoc-crm.org/cidoc-crm/E1_CRM_Entity,https://takin.solutions/ontologies/mahero/MP2_ascribes_ancestor,,"{""graphs"": []}",,,,,
