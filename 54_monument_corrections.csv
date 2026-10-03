@@ -15,6 +15,6 @@ rename_node,srdf_562_1,access_rights_type,Access Rights Type,,,,,,,,,,,
 rename_node,srdf_561_1,access_rights_statement,Access Rights Statement,,,,,,,,,,,
 # NB ascribes_function spec'd 0..1 but branch is n; cardinality tightening deferred (change_cardinality syntax TBD).
 # --- Classification: the 3 fields diverging from the sheet (others already match) ---
-rename_node,srdf_375_1,ascribed_classification,Classification,,,,,,,,,,,
-rename_node,srdf_376_1,classificatory_relation,Classificatory Relation,,,,,,,,,,,
-rename_node,srdf_785_1,classification_holds_for_group,Classification Holds for Group,,,,,,,,,,,
+rename_node,srdf_375_1,ascribed_classification,Classificatory Status Classification,,,,,,,,,,,
+rename_node,srdf_376_1,classificatory_relation,Classificatory Status Ascribed Classificatory Relation,,,,,,,,,,,
+rename_node,srdf_785_1,classification_holds_for_group,Classificatory Status Holds for,,,,,,,,,,,
