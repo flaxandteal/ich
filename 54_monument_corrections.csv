@@ -3,6 +3,7 @@ load_graph,076f9381-7b00-11e9-8d6b-80000b44d1d9,,,,,,,,,,,,,
 # --- Access Rights: relabel shared function_status (ZE5) branch to Monument's names + aliases ---
 #     Event/Activity/Artefact keep 'Function Status'. ascribes_function='Access Rights Function' per Whenua.
 rename_node,function_status,access_rights,Access Rights,,,,,,,,,,,
+update_node,access_rights,,,,,https://ontology.swissartresearch.net/aaao/ZE5_Function_Status,,,,,,,,
 rename_node,srdf_564_1,access_rights_function,Access Rights Function,,,,,,,,,,,
 rename_node,srdf_565_1,access_rights_relation,Access Rights Relation,,,,,,,,,,,
 rename_node,srdf_888_1,access_rights_holds_for_group,Access Rights Holds for Group,,,,,,,,,,,
