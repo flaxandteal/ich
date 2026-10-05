@@ -1,8 +1,15 @@
 action,subject,object,params.name,params.datatype,params.cardinality,params.ontology_class,params.parent_property,params.description,params.config,params.ontology_property,params.publication_id,params.alias_prefix,params.name_prefix,params.label
 load_graph,076f9381-7b00-11e9-8d6b-80000b44d1d9,,,,,,,,,,,,,
+<<<<<<< HEAD
 # --- Access Rights: relabel shared function_status (ZE5) branch to Monument's names + aliases ---
 #     Event/Activity/Artefact keep 'Function Status'. ascribes_function='Access Rights Function' per Whenua.
 rename_node,function_status,access_rights,Access Rights,,,,,,,,,,,
+=======
+# --- Access Rights: relabel shared function_status (ZE5) branch to Monument's names + aliases ---
+#     Event/Activity/Artefact keep 'Function Status'. ascribes_function='Access Rights Function' per Whenua.
+rename_node,function_status,access_rights,Access Rights,,,,,,,,,,,
+update_node,access_rights,,,,,https://ontology.swissartresearch.net/aaao/ZE5_Function_Status,,,,,,,,
+>>>>>>> 8e45ec2def4cd5c64a6250cde7bc7fce82280655
 rename_node,srdf_564_1,access_rights_function,Access Rights Function,,,,,,,,,,,
 rename_node,srdf_565_1,access_rights_relation,Access Rights Relation,,,,,,,,,,,
 rename_node,srdf_888_1,access_rights_holds_for_group,Access Rights Holds for Group,,,,,,,,,,,
@@ -13,8 +20,16 @@ rename_node,srdf_569_1,access_rights_initiating_act,Access Rights Initiating Act
 rename_node,srdf_570_1,access_rights_terminating_act,Access Rights Terminating Act,,,,,,,,,,,
 rename_node,srdf_562_1,access_rights_type,Access Rights Type,,,,,,,,,,,
 rename_node,srdf_561_1,access_rights_statement,Access Rights Statement,,,,,,,,,,,
+<<<<<<< HEAD
 # NB ascribes_function spec'd 0..1 but branch is n; cardinality tightening deferred (change_cardinality syntax TBD).
 # --- Classification: the 3 fields diverging from the sheet (others already match) ---
 rename_node,srdf_375_1,ascribed_classification,Classification,,,,,,,,,,,
 rename_node,srdf_376_1,classificatory_relation,Classificatory Relation,,,,,,,,,,,
 rename_node,srdf_785_1,classification_holds_for_group,Classification Holds for Group,,,,,,,,,,,
+=======
+# NB ascribes_function spec'd 0..1 but branch is n; cardinality tightening deferred (change_cardinality syntax TBD).
+# --- Classification: the 3 fields diverging from the sheet (others already match) ---
+rename_node,srdf_375_1,ascribed_classification,Classificatory Status Classification,,,,,,,,,,,
+rename_node,srdf_376_1,classificatory_relation,Classificatory Status Ascribed Classificatory Relation,,,,,,,,,,,
+rename_node,srdf_785_1,classification_holds_for_group,Classificatory Status Holds for,,,,,,,,,,,
+>>>>>>> 8e45ec2def4cd5c64a6250cde7bc7fce82280655
