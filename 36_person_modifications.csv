@@ -18,8 +18,5 @@ rename_node,audit_notes_metatype,audit_description_metatype,Audit Description Me
 # --- Audit Metadata: Validation -> Audit Validation (same issue as Place) ---,,,,,,,,,,,
 rename_node,validation,audit_validation,Audit Validation,,,,,,,,
 rename_node,validation_metatype,audit_validation_metatype,Audit Validation Metatype,,,,,,,,
-<<<<<<< HEAD
-=======
 # --- Spouse: explicit kinship node under Family Status (QA #427), sibling of Ascribed Relative ---,,,,,,,,,,,
 add_node,family_status,spouse,Spouse,resource-instance-list,n,http://www.cidoc-crm.org/cidoc-crm/E21_Person,https://ontology.swissartresearch.net/aaao/ZP30_ascribes_relative,,"{""graphs"": [{""graphid"": ""22477f01-1a44-11e9-b0a9-000d3ab1e588"", ""ontologyProperty"": """", ""inverseOntologyProperty"": """", ""useOntologyRelationship"": false}], ""searchDsl"": """", ""searchString"": """"}",,
->>>>>>> 8e45ec2def4cd5c64a6250cde7bc7fce82280655
