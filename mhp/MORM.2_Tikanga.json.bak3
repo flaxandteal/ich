@@ -1217,7 +1217,7 @@
                 },
                 {
                     "nodeid": "f3563d73-f058-5c16-95f5-de9521a8ea6a",
-                    "name": "Transfered Custody Of",
+                    "name": "declarative-custody-transfer-object-transferred",
                     "alias": "declarative-custody-transfer-object-transferred",
                     "datatype": "resource-instance-list",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E18_Physical_Thing",

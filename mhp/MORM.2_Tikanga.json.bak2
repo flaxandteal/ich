@@ -255,7 +255,7 @@
                 {
                     "nodeid": "8fff2a96-4eb5-5d0c-b9d1-5a2e56e74475",
                     "name": "Declarative Transfer of Custody",
-                    "alias": "declarative_transfer_of_custody",
+                    "alias": "ze21_declarative_transfer_of_custody_DHIF.401",
                     "datatype": "semantic",
                     "ontologyclass": "https://ontology.swissartresearch.net/aaao/ZE21_Declarative_Transfer_of_Custody",
                     "parentproperty": "http://www.cidoc-crm.org/cidoc-crm/P9_consists_of",
@@ -1217,7 +1217,7 @@
                 },
                 {
                     "nodeid": "f3563d73-f058-5c16-95f5-de9521a8ea6a",
-                    "name": "Transfered Custody Of",
+                    "name": "declarative-custody-transfer-object-transferred",
                     "alias": "declarative-custody-transfer-object-transferred",
                     "datatype": "resource-instance-list",
                     "ontologyclass": "http://www.cidoc-crm.org/cidoc-crm/E18_Physical_Thing",
