@@ -1,5 +1,0 @@
-action,subject,object,params.name,params.datatype,params.cardinality,params.ontology_class,params.parent_property,params.description,params.config,params.ontology_property,params.publication_id,params.alias_prefix,params.name_prefix,params.label,params.alias_suffix
-load_graph,07c3abbe-52cc-501b-98ef-58403bbf37e0,,,,,,,,,,,,,,
-add_subgraph,appellative-status-statement,251551d8-7fe7-11ea-bcad-f875a44e0e11,,,,,,,,http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by,,appellative_status,Appellative Status,,appellative_status_statement
-add_subgraph,classificatory-status-statement,251551d8-7fe7-11ea-bcad-f875a44e0e11,,,,,,,,http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by,,classificatory_status,Classification,,classificatory_status_statement
-add_subgraph,evental-locative-status-statement,251551d8-7fe7-11ea-bcad-f875a44e0e11,,,,,,,,http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by,,evental_locative_status,Evental Locative Status,,evental_locative_status_statement
