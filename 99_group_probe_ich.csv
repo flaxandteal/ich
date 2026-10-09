@@ -1,3 +1,0 @@
-action,subject,object,params.name,params.datatype,params.cardinality,params.ontology_class,params.parent_property,params.description,params.config,params.ontology_property,params.publication_id,params.alias_prefix,params.name_prefix,params.label,params.alias_suffix
-load_graph,07883c9e-b25c-11e9-975a-a4d18cec433a,,,,,,,,,,,,,,
-add_node,group,probe_ich,Probe ICH,string,1,http://www.w3.org/2000/01/rdf-schema#Literal,http://www.cidoc-crm.org/cidoc-crm/P3_has_note,,,,,,,,
