@@ -30,8 +30,8 @@ add_node,classification_date_qualifier,classification_date_qualifier_metatype,Cl
 add_subgraph,classificatory-status-statement,251551d8-7fe7-11ea-bcad-f875a44e0e11,,,,,,,,http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by,,classificatory_status,Classification,,classificatory_status_statement
 rename_node,descriptions,classificatory_status_descriptions,Classification Statement,,,,,,,,,,,,
 # to change description to classification status statement,,,,,,,,,,,,,,,
-delete_widget,69b054fd-ec09-53b6-8d21-a6d1ac2e8c59,,,,,,,,,,,,,,
-add_widget,10000000-0000-0000-0000-000000000005,classificatory_status_description,,,,,,,"{""defaultValue"": {""en"": {""direction"": ""ltr"", ""value"": """"}}, ""i18n_properties"": [""placeholder""], ""label"": ""Classificatory Status Statement"", ""maxLength"": null, ""placeholder"": {""en"": ""Enter text""}, ""uneditable"": false, ""width"": ""100%""}",,,,,Classificatory Status Statement,
+# delete_widget,69b054fd-ec09-53b6-8d21-a6d1ac2e8c59,,,,,,,,,,,,,,
+# add_widget,10000000-0000-0000-0000-000000000005,classificatory_status_description,,,,,,,"{""defaultValue"": {""en"": {""direction"": ""ltr"", ""value"": """"}}, ""i18n_properties"": [""placeholder""], ""label"": ""Classificatory Status Statement"", ""maxLength"": null, ""placeholder"": {""en"": ""Enter text""}, ""uneditable"": false, ""width"": ""100%""}",,,,,Classificatory Status Statement,
 "# Evental Locative Status: Timespan ,  Statement",,,,,,,,,,,,,,,
 add_node,evental-locative-status-time-span,evental_locative_status_display_date,Evental Locative Status Display Date,string,1,http://www.w3.org/2000/01/rdf-schema#Literal,http://www.cidoc-crm.org/cidoc-crm/P3_has_note,,,,,,,,
 add_node,evental-locative-status-time-span,evental_locative_status_start_date,Evental Locative Status Start Date,date,1,http://www.cidoc-crm.org/cidoc-crm/E61_Time_Primitive,http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin,,,,,,,,
@@ -73,5 +73,5 @@ update_node,evental-locative-status-terminating-act,,,,,,,,"{""graphs"": [{""gra
 rename_node,ze46_promissory_agreement_event_MORF.171,ze46_promissory_agreement_event_MORF.171,Promissory Status,,,,,,,,,,,,
 rename_node,classificatory-status-statement,classificatory-status-statement,Classificatory Statement,,,,,,,,,,,,
 rename_node,classificatory_status_descriptions,classificatory_status_descriptions,Classificatory Status Statement,,,,,,,,,,,,
-# Part A: Tikanga Type dropdown -> collection "Tikanga Type" from run.py _NOTEBOOK_COLLECTION_LABELS,,,,,,,,,,,,,,,
+"# Part A: Tikanga Type dropdown -> collection ""Tikanga Type"" from run.py _NOTEBOOK_COLLECTION_LABELS",,,,,,,,,,,,,,,
 update_node,tikanga_type,,,,,,,,"{""controlledList"": ""Tikanga Type""}",,,,,,
